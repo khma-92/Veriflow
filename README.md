@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./VeriFlow.png" alt="VeriFlow Logo" width="400"/>
+</p>
+
 # 1) Objectifs & portée
 
 * **Objectif fonctionnel :** vérifier l’identité d’un individu à distance via:
