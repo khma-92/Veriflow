@@ -1,4 +1,4 @@
-![Banner](./VeriFlow.png)
+![Banner](veriFlow.png)
 
 # 1) Objectifs & portée
 
