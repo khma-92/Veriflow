@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="./VeriFlow.png" alt="VeriFlow Logo" width="400"/>
-</p>
+![Banner](./VeriFlow.png)
 
 # 1) Objectifs & portée
 
