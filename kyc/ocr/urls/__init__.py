@@ -1,0 +1,1 @@
+from .ocr_urls import urlpatterns

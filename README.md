@@ -1,4 +1,4 @@
-![Banner](veriFlow.png)
+﻿![Banner](veriFlow.png)
 
 # 1) Objectifs & portée
 

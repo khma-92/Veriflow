@@ -1,0 +1,1 @@
+from .validate_urls import urlpatterns
